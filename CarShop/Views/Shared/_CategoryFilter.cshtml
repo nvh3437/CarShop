@@ -1,0 +1,17 @@
+﻿@model CarModel
+@{
+    Layout = null;
+}
+<div class="sidebar__item" id="cateFilter">
+    <h4>Thể loại</h4>
+    <input type="text" hidden value="@Model.Filter.category" id="CategoryFilter" />
+    @foreach (var item in Model.Categories)
+    {
+        <div class="sidebar__item__size">
+            <label for="@item.Id" class="@(Model.Filter.category==@item.Id?"text-danger":"")">
+                @item.Name
+                <input type="radio" value="@item.Id" name="category" id="@item.Id">
+            </label>
+        </div>
+    }
+</div>

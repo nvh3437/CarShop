@@ -1,0 +1,122 @@
+﻿@{
+    @model IPagedList<FeedBack>
+
+    ViewData["title"] = "Quản lý Phản hồi";
+}
+<div class="bg-light rounded p-4 me-4 mt-4">
+    <h4 class="mb-4">Phản hồi từ khách hàng</h4>
+    <div class="table table-responsive table-hover">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Khách hàng</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int cout = 0;
+                    foreach (var feed in Model)
+                    {
+                        cout++;
+                        <tr>
+                            <th scope="row">@cout</th>
+                            <td>
+                                <strong>@feed.Name</strong><br>
+                                @feed.Phone
+                                @feed.Email
+                            </td>
+                            <td>@feed.DateCreated.Value.ToString("dd/MM/yyyy hh:mm:ss")</td>
+                            <td>
+                                @if(feed.Status)
+                                {
+                                    <strong class="text-success">Đã đọc</strong>
+                                }
+                                else
+                                {
+                                    <strong class="text-danger">Chưa đọc</strong>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Manage/FeedBack/Detail?Id=@feed.Id" class="btn btn-primary btn-block">Chi tiết</a>
+                                <button type="button" class="btn btn-danger m-1" onclick="DeleteFunction('@feed.Id')">Xóa</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",new { page }))
+</div>
+<!--Form delete FeedBack-->
+    <form id="DeleteForm" name="DeleteForm" method="post" asp-action="Delete" asp-controller="FeedBack" asp-area="Manage">
+    <input type="text" id="Id" name="Id"hidden>
+    </form>
+
+@section Scripts{
+    <script>
+        function DeleteFunction(id,name) {
+            if(confirm("Xác nhận xóa "+name+"!")==true){
+                document.forms['DeleteForm']['Id'].value = id;
+                document.getElementById('DeleteForm').submit();
+            }
+        }
+</script>
+}
+@section Styles{
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+
+    .pagination {
+        padding: 30px 0;
+    }
+
+        .pagination ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .pagination li {
+            display: inline-block;
+            padding: 10px 18px;
+            color: #222;
+        }
+
+        .pagination li {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0;
+            text-align: center;
+        }
+
+        .pagination .active span {
+            background-color: #2ecc71;
+            padding: 0 7px;
+            border-radius: 100%;
+            color: #fff;
+        }
+</style>
+}

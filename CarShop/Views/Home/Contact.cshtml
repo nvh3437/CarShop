@@ -1,0 +1,110 @@
+﻿@model ContactModel
+@{
+    ViewData["title"] = "Liên Hệ";
+    ViewData["keywords"] = "Liên Hệ, Bán xe";
+}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg mb-4" data-setbg="/AssetsProducts/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>NVH CarShop</h2>
+                    <div class="breadcrumb__option">
+                        <a href="/">Trang chủ</a>
+                        <span>Kiểm tra đơn hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Contact Section Begin -->
+<section class="contact spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                <a href="tel:0961846998" class="contact__widget">
+                    <span class="icon_phone"></span>
+                    <h4>Điện thoại</h4>
+                    <p>+84-961-846-998</p>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                <a href="https://www.google.com/maps/dir//Gara+%C3%B4t%C3%B4+%C4%90%E1%BB%8Bnh+l%E1%BB%91p+Km+7+Th%C3%B4n+t%C3%A2n+ho%C3%A0+x%C3%A3+ph%C3%BAc+th%E1%BB%8Bnh+Tuy%C3%AAn+Quang+30000/@@22.1618714,105.2198292,20z/data=!4m8!4m7!1m0!1m5!1m1!1s0x36cb453ffd24fff9:0xd018728c60a68c64!2m2!1d105.2198292!2d22.1618714"
+                   class="contact__widget">
+                    <span class="icon_pin_alt"></span>
+                    <h4>Địa chỉ</h4>
+                    <p>Chiêm Hóa - Tuyên Quang</p>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                <div class="contact__widget">
+                    <span class="icon_clock_alt"></span>
+                    <h4>Giờ làm việc</h4>
+                    <p>08:00 am đến 23:00 pm</p>
+                </div>
+            </div>
+            <a href="mailto:NVHShop@gmail.com" class="col-lg-3 col-md-3 col-sm-6 text-center">
+                <div class="contact__widget">
+                    <span class="icon_mail_alt"></span>
+                    <h4>Email</h4>
+                    <p>NVHShop@gmail.com</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+<!-- Contact Section End -->
+<!-- Map Begin -->
+<div class="map">
+    <iframe
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d230.94112001074095!2d105.21960759401397!3d22.161867192843044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xd018728c60a68c64!2zR2FyYSDDtHTDtCDEkOG7i25oIGzhu5Fw!5e0!3m2!1svi!2s!4v1650396911748!5m2!1svi!2s"
+            height="500" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <div class="map-inside">
+            <i class="icon_pin"></i>
+            <div class="inside-widget">
+                <h4>NVH CarShop</h4>
+                <ul>
+                    <li>Phone: 0961846998</li>
+                    <li>Address: Chiêm Hóa - Tuyên Quang</li>
+                </ul>
+            </div>
+        </div>
+</div>
+<!-- Map End -->
+<!-- Contact Form Begin -->
+<div class="contact-form spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact__form__title">
+                    <h2>Liên Hệ Chúng Tôi</h2>
+                </div>
+            </div>
+        </div>
+        <form method="post" asp-action="Contact" asp-controller="Home" asp-area="">
+            <div asp-validation-summary="All" class="text-danger mb-4"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <input type="text" asp-for="Name" placeholder="Họ Tên">
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <input asp-for="Phone" placeholder="Điện thoại">
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <input asp-for="Email" placeholder="Email">
+                </div>
+                <div class="col-lg-12 text-center">
+                    <textarea asp-for="Content" placeholder="Nội dung"></textarea>
+                    <button type="submit" class="site-btn">Gửi</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Contact Form End -->
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}

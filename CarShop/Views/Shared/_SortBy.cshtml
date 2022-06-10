@@ -1,0 +1,44 @@
+﻿@model CarModel
+@{
+    Layout = null;
+}
+<div class="filter__item">
+    <div class="row">
+        <div class="col-lg-4 col-md-5">
+            <div class="filter__sort">
+                <span>Bộ lọc</span>
+                <select id="sortBy">
+                    @if (Model.Filter.sortBy == "lasted")
+                    {
+                        <option id="lasted" value="lasted" selected>Mới nhất</option>
+                    }
+                    else
+                    {
+                        <option id="lasted" value="lasted">Mới nhất</option>
+                    }
+                    @if (Model.Filter.sortBy == "price")
+                    {
+                        <option id="price" value="price" selected>Giá từ thấp đến cao</option>
+                    }
+                    else
+                    {
+                        <option id="price" value="price">Giá từ thấp đến cao</option>
+                    }
+                    @if (Model.Filter.sortBy == "desprice")
+                    {
+                        <option id="desprice" value="desprice" selected>Giá từ cao đến thấp</option>
+                    }
+                    else
+                    {
+                        <option id="desprice" value="desprice">Giá từ cao đến thấp</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <div class="filter__found">
+                <h6>Tìm thấy <span>@Model.ListCars.TotalItemCount</span> kết quả</h6>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+<!--System message-->
+
+<script type="text/javascript">
+    setTimeout(function () { $('.alert').remove(); }, 3000);
+</script>
+@{
+    if (TempData.ContainsKey("SystemMessage"))
+    {
+        List<SystemMessage> x = JsonConvert.DeserializeObject<List<SystemMessage>>(TempData["SystemMessage"].ToString());
+        if (x != null)
+        {
+            int mt = 10;
+            
+            foreach (SystemMessage message in x)
+            {
+                string m = mt + "px";
+                if (message.Title == "SystemMessageSuccess")
+                {
+                    <div class="alert alert-success position-fixed bottom-0" style="z-index:10000;margin-bottom:@m;" role="alert">
+                        <i class="fa fa-exclamation-circle me-2"></i>@message.Message
+                    </div>
+                }
+                else //SystemMessageDanger
+                {
+                    <div class="alert alert-danger  position-fixed bottom-0" style="z-index:10000;margin-bottom:@m;" role="alert">
+                        <i class="fa fa-exclamation-circle me-2"></i>@message.Message
+                    </div>
+                }
+                mt += 70;
+            }
+        }
+    }
+}

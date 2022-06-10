@@ -1,0 +1,57 @@
+﻿@model User
+@{
+    var roles = await UserManager.GetRolesAsync(Model);
+}
+<div class="sidebar pe-4 pb-3">
+    <nav class="navbar bg-light navbar-light">
+        <a href="/" class="navbar-brand mx-4 mt-4 mb-3">
+            <img src="/AssetsProducts/img/logo.png" style="max-width:100%;" />
+        </a>
+        <div class="d-flex align-items-center ms-4 mb-4">
+            <div class="position-relative">
+                @if (Model.Avatar == null)
+                {
+                    <i class="fas fa-fw fa-user text-secondary rounded-circle me-lg-2" style="width: 40px; height: 40px;"></i>
+                }
+                else
+                {
+                    <img class="rounded-circle me-lg-2" src="~/@Model.Avatar" alt="" style="width: 40px; height: 40px;">
+                }
+                <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+            </div>
+            <div class="ms-3">
+                <h6 class="mb-0">@Model.UserName</h6>
+                <span>@roles.FirstOrDefault()</span>
+            </div>
+        </div>
+        <div class="navbar-nav w-100">
+            <a id="HomeLink" href="/Manage/" class="nav-item nav-link "><i class="fa fa-laptop me-2"></i>Dashboard</a>
+            @if (roles.FirstOrDefault() == "Admin")
+            {
+                <div class="nav-item dropdown">
+                    <a id="ManageLink" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-gears me-2"></i>Quản lý</a>
+                    <div class="dropdown-menu bg-light border-0">
+                        <a id="UserLink" href="/Manage/User" class="dropdown-item"><i class="fa-solid fa-user me-2"></i>Người dùng</a>
+                        <a id="RoleLink" href="/Manage/Role" class="dropdown-item"><i class="fa-solid fa-ruler me-2"></i>Phân quyền</a>
+                    </div>
+                </div>
+            }
+            <div class="nav-item dropdown">
+                <a id="ProductLink" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-th me-2"></i>Sản phẩm</a>
+                <div class="dropdown-menu bg-light border-0">
+                    <a id="MakerLink" href="/Manage/AutoMaker" class="dropdown-item"><i class="fa-solid fa-gear me-2"></i>Nhà sản xuất</a>
+                    <a id="CategoryLink" href="/Manage/Category" class="dropdown-item"><i class="fa-solid fa-tags me-2"></i>Thể loại</a>
+                    <a id="CarLink" href="/Manage/Car" class="dropdown-item"><i class="fa-solid fa-car me-2"></i>Sản phẩm</a>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <a id="ProductLink" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-file-invoice-dollar me-2"></i>Đơn hàng</a>
+                <div class="dropdown-menu bg-light border-0">
+                    <a id="MakerLink" href="/Manage/Bill" class="dropdown-item"><i class="fas fa-file-invoice-dollar me-2"></i>Đặt xe</a>
+                </div>
+            </div>
+            <a id="HomeLink" href="/Manage/FeedBack" class="nav-item nav-link "><i class="fas fa-comment-alt me-2"></i>Phản hồi</a>
+            <a href="/Manage/Login/Logout" class="nav-item nav-link"><i class="fa-solid fa-right-from-bracket"></i>Đăng xuất</a>
+        </div>
+    </nav>
+</div>

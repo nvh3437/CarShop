@@ -1,0 +1,159 @@
+﻿@{
+    @model IPagedList<UserManage>
+
+    ViewData["title"] = "Quản lý User";
+}
+<div class="bg-light rounded p-4 me-4 mt-4">
+    <h4 class="mb-4">Danh sách User</h4>
+    <div class="table table-responsive table-hover">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">
+                        <a href="/Manage/User/Create" class="btn btn-success btn-block mb-1 px-3">Thêm</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int cout = 0;
+                    foreach (var user in Model)
+                    {
+                        cout++;
+                        <tr>
+                            <th scope="row">@cout</th>
+                            <td>@user.UserName</td>
+                            <td>@user.Name</td>
+                            <td>@user.Email</td>
+                            <td>
+                                @if (user.Role == null)
+                                {
+                                    <a href="/Manage/User/ManageRole?userId=@user.UserId" class="text-success">+ Thêm roles</a>
+                                }
+                                else
+                                {
+                                    <a href="/Manage/User/ManageRole?userId=@user.UserId" class="text-primary">@user.Role</a>
+                                }
+
+                            </td>
+                            <td>
+                            @Html.Raw(user.Status)<br>
+                            @if(user.Status == "Hoạt động")
+                                {
+                                    <button type="button" class="btn btn-success btn-block" onclick="LockFunction('@user.UserId')">Khóa</button><br>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-danger btn-block" onclick="UnlockFunction('@user.UserId')">Mở Khóa</button><br>
+                                }
+                            </td>
+                            <td>
+                                
+                                    <a href="/Manage/User/Update?userId=@user.UserId" class="btn btn-primary btn-block ">Sửa</a> &nbsp;
+                                    <button type="button" class="btn btn-danger btn-block" onclick="DeleteFunction('@user.UserId')">Xóa</button><br>
+                                    <a href="/Manage/User/ChangePassword?userId=@user.UserId" class="btn btn-primary btn-block px-3 mt-1">Đổi mật khẩu</a>
+                                
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",new { page }))
+
+</div>
+    <!--Form delete user-->
+    <form id="DeleteForm" name="DeleteForm" method="post" asp-action="Delete" asp-controller="User" asp-area="Manage">
+    <input type="text" id="userId" name="userId"hidden>
+    </form>
+    <!--Form lock user-->
+    <form id="LockForm" name="LockForm" method="post" asp-action="Lockout" asp-controller="User" asp-area="Manage">
+    <input type="text" id="userId" name="userId" hidden>
+    <input type="text" id="timeLock" name="timeLock"hidden>
+    </form>
+    <!--Form unlock user-->
+    <form id="UnlockForm" name="UnlockForm" method="post" asp-action="UnLockout" asp-controller="User" asp-area="Manage">
+    <input type="text" id="userId" name="userId"hidden>
+    </form>
+@section Scripts{
+    <script>
+        function DeleteFunction(id) {
+            if(confirm("Xác nhận xóa User này!")==true){
+                document.forms['DeleteForm']['userId'].value = id;
+                document.getElementById('DeleteForm').submit();
+            }
+        }
+        function UnlockFunction(id) {
+            if(confirm("Xác nhận mở khóa User này!")==true){
+                document.forms['UnlockForm']['userId'].value = id;
+                document.getElementById('UnlockForm').submit();
+            }
+        }
+        function LockFunction(id) {
+            if(confirm("Xác nhận khóa User này!")==true){
+                document.forms['LockForm']['userId'].value = id;
+                document.getElementById('LockForm').submit();
+            }
+        }
+</script>
+}
+
+@section Styles{
+ <style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+ a{
+   text-decoration: none;
+ }
+
+
+ .pagination{
+   padding: 30px 0;
+ }
+
+ .pagination ul{
+   margin: 0;
+   padding: 0;
+   list-style-type: none;
+ }
+
+ .pagination li{
+   display: inline-block;
+   padding: 10px 18px;
+   color: #222;
+ }
+
+ .pagination li{
+   width: 40px;
+   height: 40px;
+   line-height: 40px;
+   padding: 0;
+   text-align: center;
+ }
+
+ .pagination .active span{
+   background-color: #2ecc71;
+   padding:0 7px;
+   border-radius: 100%;
+   color: #fff;
+ }
+ </style>
+}

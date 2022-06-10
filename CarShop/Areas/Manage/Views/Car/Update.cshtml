@@ -1,0 +1,169 @@
+﻿@model CarModel
+@{
+    ViewData["title"] = "Cập nhật Xe";
+}
+
+<div class="bg-light rounded p-4 me-4 mt-4">
+    <h5>Cập nhật Xe</h5>
+    <h6 class="mb-4">@Model.Name</h6>
+    <form method="post" asp-action="Update" asp-controller="Car" asp-area="Manage" enctype="multipart/form-data" >
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="Id" hidden />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên</label>
+            <input asp-for="Name" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <fieldset class="mb-3 col-6 row">
+            <legend class="form-label">Nhà sản xuất</legend>
+            @if(Model.AutoMakers != null && Model.AutoMakers.Count>0) 
+            { 
+                foreach (var autoMaker in Model.AutoMakers)
+                {
+                    <div class="form-check form-switch col-6">
+                    @if (Model.OldAutoMakersId.Contains(autoMaker.Id))
+                    {
+                        <input id="@autoMaker.Id" name="NewAutoMakersId" value="@autoMaker.Id" class="form-check-input" checked type="checkbox">
+                    }
+                    else
+                    {
+                        <input id="@autoMaker.Id" name="NewAutoMakersId" value="@autoMaker.Id" class="form-check-input" type="checkbox">
+                    }
+                    <label class="form-check-label" for="@autoMaker.Id">@autoMaker.Name</label>
+                </div>
+                }
+            }
+        </fieldset>
+        
+        <fieldset class="mb-3 col-6 row">
+            <legend class="form-label col-12">Thể loại</legend>
+            @if(Model.Categories != null && Model.Categories.Count>0) 
+            { 
+                foreach (var category in Model.Categories)
+                {
+                    <div class="form-check form-switch col-6">
+                        @if (Model.OldCategoriesId.Contains(category.Id))
+                        {
+                            <input id="@category.Id" name="NewCategoriesId" value="@category.Id" class="form-check-input" checked type="checkbox">
+                        }
+                        else
+                        {
+                            <input id="@category.Id" name="NewCategoriesId" value="@category.Id" class="form-check-input" type="checkbox">
+                        }
+                        <label class="form-check-label" for="@category.Id">@category.Name</label>
+                    </div>
+                }
+            }
+        </fieldset>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Ảnh bìa</label>
+            <div class="square position-relative display-2 mb-3 overflow-hidden">
+            @{
+                if(Model.Image == null)
+                {
+                    <img src="~/img/image-slash.jpg" class="img-fluid">
+                }
+                else
+                {
+                    <img src="~/@Model.Image" class="img-fluid" style="width: 500px;">
+                }
+            }
+	        </div>
+        </div>
+        <div class="mb-3">
+            <blockquote class="blockquote">
+              <label asp-for="CoverImage" class="form-label">Ảnh bìa mới</label>
+              <footer class="blockquote-footer">Đề xuất hình ảnh vuông: <cite title="Source Title">500x500, 600x600...</cite></footer>
+            </blockquote>
+            <input asp-for="CoverImage" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="CoverImage"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SortDescription" class="form-label"></label>
+            <textarea asp-for="SortDescription" rows="5" class="form-control">
+            </textarea>
+            <div class="form-text text-danger">
+                <span asp-validation-for="SortDescription"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label">Nội dung</label>
+            <textarea asp-for="Content" rows="5" class="form-control">
+            </textarea>
+            <div class="form-text text-danger">
+                <span asp-validation-for="Content"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Giá</label>
+            <input asp-for="Price" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="Price"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PromoPrice" class="form-label">Giảm giá</label>
+            <input asp-for="PromoPrice" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="PromoPrice"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SeoPageTitle" class="form-label"></label>
+            <input asp-for="SeoPageTitle" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="SeoPageTitle"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SeoAlias" class="form-label"></label>
+            <input asp-for="SeoAlias" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="SeoAlias"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SeoKeywords" class="form-label"></label>
+            <input asp-for="SeoKeywords" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="SeoKeywords"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SeoDescription" class="form-label"></label>
+            <textarea asp-for="SeoDescription" class="form-control">
+            </textarea>
+            <div class="form-text text-danger">
+                <span asp-validation-for="SeoDescription"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <input asp-for="Status" type="checkbox" checked class="form-check-input">
+            <label asp-for="Status" class="form-label">Kích hoạt</label>
+            <div class="form-text text-danger">
+                <span asp-validation-for="Status"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <input asp-for="Recommended" type="checkbox" class="form-check-input">
+            <label asp-for="Recommended" class="form-label">Đề xuất?</label>
+            <div class="form-text text-danger">
+                <span asp-validation-for="Recommended"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button><br /><br />
+        <a href="/manage/car" class="text-primary">Hủy bỏ</a>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+    <partial name="_Summernote"></partial>
+    <partial name="_elFinder"></partial>
+}

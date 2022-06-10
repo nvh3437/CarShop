@@ -1,0 +1,312 @@
+﻿@using ShopData
+@inject Context context;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - CarShop</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="NVHCarShop, @ViewData["keywords"]" name="keywords">
+    <meta content="NVHCarShop, @ViewData["description"]" name="description">
+    <link href="~/img/favicon_created_by_logaster.ico" rel="icon">
+    <!-- Google Font -->
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/AssetsProducts/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AssetsProducts/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AssetsProducts/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/AssetsProducts/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/AssetsProducts/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AssetsProducts/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AssetsProducts/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AssetsProducts/css/style.css" type="text/css">
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="#"><img src="~/AssetsProducts/img/logo.png" alt=""></a>
+        </div>
+        <div class="humberger__menu__widget">
+            <div class="header__top__right__auth">
+                <a asp-area="Manage" asp-controller="Home" asp-action="Index"><i class="fa fa-user"></i> Login</a>
+            </div>
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul>
+                <li id="homeLink"><a href="/">Trang chủ</a></li>
+                <li id="carLink"><a href="/Car">Xe</a></li>
+                <li id="makerLink">
+                    Nhà sản xuất
+                    <ul class="header__menu__dropdown">
+                        @{
+                            var makers = context.AutoMakers.ToList();
+                            foreach (var maker in makers)
+                            {
+                                <li><a asp-controller="AutoMaker" asp-action="Index" asp-route-id="@maker.SeoAlias">@maker.Name</a></li>
+                            }
+                        }
+                    </ul>
+                </li>
+                <li id="contactLink"><a href="/Home/Contact">Liên hệ</a></li>
+                <li id="trackingLink"><a href="/Home/Tracking">Tra cứu</a></li>
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="header__top__right__social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        </div>
+        <div class="humberger__menu__contact">
+            <ul>
+                <li><a href="mailto:nvhshop@gmail.com" class="text-dark"><i class="fa fa-envelope"></i>NvhShop@gmail.com</a></li>
+                <li>Thủ tục nhanh - tiết kiệm</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Humberger End -->
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><a href="mailto:nvhshop@gmail.com" class="text-dark"><i class="fa fa-envelope"></i>NvhShop@gmail.com</a></li>
+                                <li>Thủ tục nhanh - tiết kiệm</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <a asp-area="Manage" asp-controller="Home" asp-action="Index"><i class="fa fa-user"></i> Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="~/AssetsProducts/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg">
+                    <nav class="header__menu">
+                        <ul>
+                            <li id="homeLinks"><a href="/">Trang chủ</a></li>
+                            <li id="carLinks"><a href="/Car">Xe</a></li>
+                            <li id="makerLinks">
+                                <a>Nhà sản xuất</a>
+                                <ul class="header__menu__dropdown">
+                                    @{
+                                        foreach (var maker in makers)
+                                        {
+                                            <li><a href="/AutoMaker/@maker.SeoAlias">@maker.Name</a></li>
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                            <li id="contactLinks"><a href="/Home/Contact">Liên hệ</a></li>
+                            <li id="trackingLinks"><a href="/Home/Tracking">Tra cứu</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                @*<div class="col-lg-3">
+                    <div class="header__cart">
+                    <ul>
+                    <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                    <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                    </ul>
+                    <div class="header__cart__price">item: <span>$150.00</span></div>
+                    </div>
+                    </div>*@
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    <!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    @if(ViewData["DisableHeroCate"] is not true)
+                    {
+                        <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Nhà sản xuất</span>
+                        </div>
+                        <ul>
+                            @{
+                                foreach (var maker in makers)
+                                {
+                                    <li><a href="/Car/?AutoMaker=@maker.SeoAlias">@maker.Name</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    }
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form asp-action="Index" asp-controller="Car" asp-area="" method="get">
+                                <input type="text" id="keyword" name="keyword" placeholder="Tìm kiếm...">
+                                <button type="submit" class="site-btn">Tìm kiếm</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <a href="tel:+84961846998" class="text-dark"><i class="fa fa-phone"></i></a>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5><a href="tel:+84961846998" class="text-dark">0961 846 998</a></h5>
+                                <span>Hỗ trợ online 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+    @RenderBody()
+
+
+    <!-- Footer Section Begin -->
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__about__logo">
+                            <a href="./index.html"><img src="~/AssetsProducts/img/logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Địa chỉ: Chiêm Hóa - Tuyên Quang</li>
+                            <li><a href="tel:+84961846998" class="text-dark">Phone: +84 961 846 998</a></li>
+                            <li><a href="mailto:nvhshop@gmail.com" class="text-dark">Email: NvhShop@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
+                    <div class="footer__widget">
+                        <h6>Thông tin bổ sung</h6>
+                        <ul>
+                            <li><a asp-controller="Home" asp-action="About" asp-areas="">Về chúng tôi</a></li>
+                            <li><a asp-controller="Home" asp-action="Policy" asp-areas="">Điều khoản</a></li>
+                            <li><a asp-controller="Home" asp-action="Tracking" asp-areas="">Thông tin vận chuyển</a></li>
+                            <li><a asp-controller="Home" asp-action="Secure" asp-areas="">Chính sách bảo mật</a></li>
+                            <li><a asp-controller="Home" asp-action="Contact" asp-areas="">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer__widget">
+                        <h6>Nhận thông báo mới nhất</h6>
+                        <p>Nhận thông tin cập nhật E-mail về cửa hàng mới nhất của chúng tôi và các ưu đãi đặc biệt.</p>
+                        <form action="#">
+                            <input type="text" placeholder="Email">
+                            <button type="submit" class="site-btn">Theo dõi</button>
+                        </form>
+                        <div class="footer__widget__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text">
+                            <p>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved <i class="fa fa-heart" aria-hidden="true"></i>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                        <div class="footer__copyright__payment"><img src="~/AssetsProducts/img/payment-item.png" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer Section End -->
+    <!-- Js Plugins -->
+    <script src="~/AssetsProducts/js/jquery-3.3.1.min.js"></script>
+    <script src="~/AssetsProducts/js/bootstrap.min.js"></script>
+    <script src="~/AssetsProducts/js/jquery.nice-select.min.js"></script>
+    <script src="~/AssetsProducts/js/jquery-ui.min.js"></script>
+    <script src="~/AssetsProducts/js/jquery.slicknav.js"></script>
+    <script src="~/AssetsProducts/js/mixitup.min.js"></script>
+    <script src="~/AssetsProducts/js/owl.carousel.min.js"></script>
+    <script src="~/AssetsProducts/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        var controller = "@ViewContext.RouteData.Values["controller"]";
+
+        if(controller == "Car"){        
+            document.getElementById("carLink").classList.add("active");
+            document.getElementById("carLinks").classList.add("active");
+        }
+        if(controller == "AutoMaker"){
+            document.getElementById("makerLink").classList.add("active");
+            document.getElementById("makerLinks").classList.add("active");
+        }
+        
+
+        var action = "@ViewContext.RouteData.Values["action"]";
+        if(controller == "Home" && action=="Index"){
+            document.getElementById("homeLink").classList.add("active");
+            document.getElementById("homeLinks").classList.add("active");
+        }
+        
+        if(controller == "Home" && action=="Contact"){
+            document.getElementById("contactLink").classList.add("active");
+            document.getElementById("contactLinks").classList.add("active");
+        }
+        
+        if(controller == "Home" && action=="Tracking"){
+            document.getElementById("trackingLink").classList.add("active");
+            document.getElementById("trackingLinks").classList.add("active");
+        }
+        
+
+
+    </script>
+
+</body>
+
+</html>

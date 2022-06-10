@@ -1,0 +1,60 @@
+﻿@model CategoryModel
+@{
+    ViewData["title"] = "Cập nhật Thể loại";
+}
+
+<div class="bg-light rounded p-4 me-4 mt-4">
+    <h5>Cập nhật Thể loại</h5>
+    <h6 class="mb-4">@Model.Name</h6>
+    <form method="post" asp-action="Update" asp-controller="Category" asp-area="Manage" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="Id" hidden />
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Ảnh bìa</label>
+            <div class="square position-relative display-2 mb-3 overflow-hidden">
+            @{
+                if(Model.Image == null)
+                {
+                    <img src="~/img/image-slash.jpg" class="img-fluid">
+                }
+                else
+                {
+                    <img src="~/@Model.Image" class="img-fluid" style="width: 500px;">
+                }
+            }
+	        </div>
+        </div>
+        <div class="mb-3">
+            <blockquote class="blockquote">
+              <label asp-for="CoverImage" class="form-label">Ảnh bìa mới</label>
+              <footer class="blockquote-footer">Đề xuất hình ảnh vuông: <cite title="Source Title">500x500, 600x600...</cite></footer>
+            </blockquote>
+            <input asp-for="CoverImage" class="form-control">
+            <div class="form-text text-danger">
+                <span asp-validation-for="CoverImage"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <input asp-for="Status" type="checkbox" checked class="form-check-input">
+            <label asp-for="Status" class="form-label">Kích hoạt</label>
+            <div class="form-text text-danger">
+                <span asp-validation-for="Status"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button><br /><br />
+        <a href="/manage/category" class="text-primary">Hủy bỏ</a>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+    <partial name="_Summernote"></partial>
+    <partial name="_elFinder"></partial>
+}

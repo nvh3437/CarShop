@@ -1,0 +1,57 @@
+﻿@{
+    @model List<RoleManage>
+
+    ViewData["title"] = "Quản lý Role";
+}
+<div class="bg-light rounded p-4 me-4 mt-4">
+    <h4 class="mb-4">Vai Trò</h4>
+    <div class="table table-responsive table-hover">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Danh sách User</th>
+                    <th scope="col">
+                        <a href="/Manage/Role/Create" class="btn btn-success btn-block mb-1 px-3">Thêm</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int cout = 0;
+                    foreach (var role in Model)
+                    {
+                        cout++;
+                        <tr>
+                            <th scope="row">@cout</th>
+                            <td>@role.Name</td>
+                            <td>@role.Description</td>
+                            <td>
+                                <a href="/Manage/Role/ManageUser?roleId=@role.Id" class="btn btn-success btn-block mb-1">Danh sách User</a>
+                            </td>
+                            <td>
+                                <form id="@role.Id" method="post" asp-action="Delete" asp-controller="Role" asp-area="manage">
+                                
+                                    <input type="text" name="roleId" value="@role.Id" hidden>
+                                    <a href="/Manage/Role/Update?roleId=@role.Id" class="btn btn-primary btn-block px-3">Sửa</a> &nbsp;
+                                    <button type="button" class="btn btn-danger btn-block px-3" onclick="DeleteFunction('@role.Id')">Xóa</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function DeleteFunction(id) {
+            if(confirm("Xác nhận xóa Role này!")==true){
+                document.getElementById(id).submit();
+            }
+        }
+</script>
+}

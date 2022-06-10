@@ -1,0 +1,49 @@
+﻿@{
+    @model FeedBack
+
+    ViewData["title"] = "Quản lý Phản hồi";
+}
+<div class="bg-light rounded p-4 me-4 my-4">
+    <h4 class="mb-4">Phản hồi từ khách hàng</h4>
+   <div class="mt-4">
+       Họ Tên: @Model.Name<br />
+       Số điện thoại: @Model.Phone<br />
+       Email: @Model.Email<br />
+       Ngày tạo: @Model.DateCreated.Value.ToString("dd/MM/yyyy hh:mm:ss")<br />
+       Nội dung: <p>@Model.Content</p>
+   </div>
+    @if (Model.Status)
+    {
+    <button type="button" class="btn btn-primary m-1" onclick="StatusFunction('@Model.Id','Chuyển tới chưa đọc')">Chuyển tới chưa đọc</button>
+    }
+    else
+    {
+    <button type="button" class="btn btn-success m-1" onclick="StatusFunction('@Model.Id','Chuyển tới đã xem')">Chuyển tới đã xem</button>
+    }
+   <button type="button" class="btn btn-danger m-1" onclick="DeleteFunction('@Model.Id')">Xóa</button>
+</div>
+
+<!--Form delete FeedBack-->
+    <form id="DeleteForm" name="DeleteForm" method="post" asp-action="Delete" asp-controller="FeedBack" asp-area="Manage">
+    <input type="text" id="Id" name="Id"hidden>
+    </form>
+<!--Form Status FeedBack-->
+    <form id="StatusForm" name="StatusForm" method="post" asp-action="SwitchStatus" asp-controller="FeedBack" asp-area="Manage">
+    <input type="text" id="Id" name="Id"hidden>
+    </form>
+@section Scripts{
+    <script>
+        function DeleteFunction(id,name) {
+            if(confirm("Xác nhận xóa "+name+"!")==true){
+                document.forms['DeleteForm']['Id'].value = id;
+                document.getElementById('DeleteForm').submit();
+            }
+        }
+        function StatusFunction(id,act) {
+            if(confirm("Xác nhận "+act+"?")==true){
+                document.forms['StatusForm']['Id'].value = id;
+                document.getElementById('StatusForm').submit();
+            }
+        }
+</script>
+}

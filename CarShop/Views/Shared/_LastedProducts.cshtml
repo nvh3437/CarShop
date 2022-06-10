@@ -1,0 +1,48 @@
+﻿@using ShopData.Model
+@{
+    Layout = null;
+}
+@model List<Car>
+<div class="sidebar__item">
+    <div class="latest-product__text">
+        <h4>Mới nhất</h4>
+        <div class="latest-product__slider owl-carousel">
+            <div class="latest-prdouct__slider__item">
+                @for (var i = 0; i < 3 && i < Model.Count; i++)
+                {
+                    <a href="/Car/Detail/@Model[i].SeoAlias" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="/@(Model[i].CoverImage == null?"img/image-slash.jpg":Model[i].CoverImage)" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>@Model[i].Name</h6>
+                            @if (Model[i].PromoPrice > 0)
+                            {
+                                <span><del>@String.Format("{0:0,0 VND}", @Model[i].Price)</del></span>
+                            }
+                            <span class="text-danger">@String.Format("{0:0,0 VND}", @Model[i].Price-@Model[i].PromoPrice)</span>
+                        </div>
+                    </a>
+                }
+            </div>
+            <div class="latest-prdouct__slider__item">
+                @for (var i = 3; i < 6 && i < Model.Count; i++)
+                {
+                    <a href="/Car/Detail/@Model[i].SeoAlias" class="latest-product__item">
+                        <div class="latest-product__item__pic">
+                            <img src="/@(Model[i].CoverImage == null?"img/image-slash.jpg":Model[i].CoverImage)" alt="">
+                        </div>
+                        <div class="latest-product__item__text">
+                            <h6>@Model[i].Name</h6>
+                            @if (Model[i].PromoPrice > 0)
+                            {
+                                <span><del>@String.Format("{0:0,0 VND}", @Model[i].Price)</del></span>
+                            }
+                            <span class="text-danger">@String.Format("{0:0,0 VND}", @Model[i].Price-@Model[i].PromoPrice)</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@model CarModel
+@{
+    Layout = null;
+}
+<div class="sidebar__item">
+    <h4>Lọc theo giá</h4>
+    <div class="price-range-wrap">
+        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+             data-min="@Model.MinPrice" data-max="@Model.MaxPrice" data-mindef="@Model.Filter.minAmount" data-maxdef="@Model.Filter.maxAmount">
+            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+        </div>
+        <div class="range-slider">
+            <div class="price-input" style="font-weight:700; color:#dd2222;">
+                <input type="text" id="minamount" readonly>
+                <input type="text" id="maxamount" readonly>Triệu
+            </div>
+        </div>
+        <button type="button" onclick="FilterByPrice()" class="primary-btn mt-4">Thực hiện</button>
+    </div>
+</div>
+
+        

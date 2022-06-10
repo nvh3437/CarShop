@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["title"] = "Thông tin cá nhân";
+    @model UserProfile
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- Page title -->
+            <div class="my-5">
+                <h3>Thông tin cá nhân</h3>
+                <hr>
+            </div>
+            <!-- Form START -->
+            <form method="post" asp-action="Index" asp-controller="Profile" asp-area="Manage" enctype="multipart/form-data" class="file-upload">
+                <input asp-for="UserId" hidden />
+                <div class="row mb-5 gx-5">
+                    <!-- Contact detail -->
+                    <div class="col-xxl-8 mb-5 mb-xxl-0">
+                        <div class="bg-secondary-soft px-4 py-5 rounded">
+                            <div class="row g-3">
+                                <h4 class="mb-4 mt-0">Thông tin liên hệ</h4>
+                                <!-- Name -->
+                                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                                <div class="col-md-6">
+                                    <label asp-for="Name" class="form-label">Họ tên *</label>
+                                    <textarea asp-for="Name" type="text" class="form-control" rows="2" placeholder="Nguyễn Văn A" >
+                                    </textarea>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <!-- UserName -->
+                                <div class="col-md-6">
+                                    <label class="form-label" asp-for="UserName" >Tên đăng nhập *</label>
+                                    <input asp-for="UserName" type="text" class="form-control" placeholder="UserName" >
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <!-- Phone number -->
+                                <div class="col-md-6">
+                                    <label class="form-label" asp-for="Phone" >Số điện thoại *</label>
+                                    <input asp-for="Phone" type="text" class="form-control" placeholder="0123456789" >
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                                <!-- Email -->
+                                <div class="col-md-6">
+                                    <label asp-for="Email" class="form-label">Email *</label>
+                                    @if(Model.ConfirmEmail == false)
+                                    {
+                                        
+									    <span class="text-danger">&nbsp Chưa xác nhận </span>
+									    <a href="/Manage/register/ResendEmail?userId=@Model.UserId" class="btn btn-success-soft btn-block mb-1">Gửi lại</a>
+                                    }
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="email@gmail.com">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <!-- Birthday -->
+                                <div class="col-md-6">
+                                    <label asp-for="Birthday" class="form-label">Ngày sinh *</label>
+                                    <input asp-for="Birthday" type="date" class="form-control">
+                                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                                </div>
+                                <!-- Address -->
+                                <div class="col-md-6">
+                                    <label asp-for="Address" class="form-label">Địa chỉ *</label>
+                                    <textarea asp-for="Address" rows="2" type="text" class="form-control" placeholder="Việt Trì - Phú Thọ">
+                                    </textarea>
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div> <!-- Row END -->
+                        </div>
+                    </div>
+                    <!-- Upload profile -->
+                    <div class="col-xxl-4">
+                        <div class="bg-secondary-soft px-4 py-5 rounded">
+                            <div class="row g-3">
+                                <h4 class="mb-4 mt-0">Avatar</h4>
+                                <div class="text-center">
+                                    <!-- Image upload -->
+									<div class="square position-relative display-2 mb-3 overflow-hidden">
+                                    @{
+                                        if(Model.Avatar == null)
+                                        {
+										<i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+                                        }
+                                        else
+                                        {
+                                            <img src="~/@Model.Avatar" class="img-fluid">
+                                        }
+                                    }
+									</div>
+                                    <!-- Button -->
+                                    <input type="file" asp-for="FileAvatar" hidden="" >
+                                    <label class="btn btn-success-soft btn-block"  asp-for="FileAvatar" >Tải lên</label>
+                                    <button type="submit" formaction="~/Manage/Profile/DeleteAvatar" class="btn btn-danger-soft">Xóa</button>
+                                    <!-- Content -->
+                                    <p class="text-muted mt-3 mb-0"><span class="me-1">Chú ý:</span>Nên đặt ảnh 300px x 300px</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Row END -->
+                <!-- Social media detail -->
+                <div class="row mb-5 gx-5">
+                    <div class="col-xxl-6 mb-5 mb-xxl-0">
+                        <div class="bg-secondary-soft px-4 py-5 rounded">
+                            <div class="row g-3">
+                                <h4 class="mb-4 mt-0">Thông tin mạng xã hội</h4>
+                                <!-- Facebook -->
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fab fa-fw fa-facebook me-2 text-facebook"></i>Facebook *</label>
+                                    <input type="text" class="form-control" placeholder="" aria-label="Facebook" value="http://www.facebook.com">
+                                </div>
+                                <!-- Twitter -->
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fab fa-fw fa-twitter text-twitter me-2"></i>Twitter *</label>
+                                    <input type="text" class="form-control" placeholder="" aria-label="Twitter" value="http://www.twitter.com">
+                                </div>
+                                <!-- Linkedin -->
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fab fa-fw fa-linkedin-in text-linkedin me-2"></i>Linkedin *</label>
+                                    <input type="text" class="form-control" placeholder="" aria-label="Linkedin" value="http://www.linkedin.com">
+                                </div>
+                                <!-- Instragram -->
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fab fa-fw fa-instagram text-instagram me-2"></i>Instagram *</label>
+                                    <input type="text" class="form-control" placeholder="" aria-label="Instragram" value="http://www.instragram.com">
+                                </div>
+                                <!-- Dribble -->
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fas fa-fw fa-basketball-ball text-dribbble me-2"></i>Dribble *</label>
+                                    <input type="text" class="form-control" placeholder="" aria-label="Dribble" value="http://www.dribble.com">
+                                </div>
+                                <!-- Pinterest -->
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fab fa-fw fa-pinterest text-pinterest"></i>Pinterest *</label>
+                                    <input type="text" class="form-control" placeholder="" aria-label="Pinterest" value="http://www.pinterest.com">
+                                </div>
+                            </div> <!-- Row END -->
+                        </div>
+                    </div>
+
+                    <!-- change password -->
+                    <div class="col-xxl-6">
+                        <div class="bg-secondary-soft px-4 py-5 rounded">
+                            <div class="row g-3">
+                                <h4 class="my-4">Đổi mật khẩu</h4>
+                                <!-- Old password -->
+                                <div class="col-md-6">
+                                    <label asp-for="OldPassword" class="form-label">Mật khẩu cũ *</label>
+                                    <input asp-for="OldPassword" type="password" class="form-control" >
+                                    <span asp-validation-for="OldPassword" class="text-danger"></span>
+                                </div>
+                                <!-- New password -->
+                                <div class="col-md-6">
+                                    <label asp-for="NewPassword" class="form-label">Mật khẩu mới *</label>
+                                    <input asp-for="NewPassword" type="password" class="form-control" >
+                                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                                </div>
+                                <!-- Confirm password -->
+                                <div class="col-md-12">
+                                    <label asp-for="ConfirmPassword" class="form-label">Xác nhận mật khẩu *</label>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control" >
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Row END -->
+                <!-- button -->
+                <div class="gap-3 d-md-flex justify-content-md-end text-center">
+                    <button type="button" class="btn btn-danger btn-lg">Xóa Profile</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Cập nhật profile</button>
+                </div>
+            </form> <!-- Form END -->
+        </div>
+    </div>
+</div>
+@section Styles{
+    <link rel="stylesheet" href="~/css/ProfilePage.css" />
+}
